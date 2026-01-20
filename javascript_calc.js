@@ -1,28 +1,23 @@
-// Grab elements
+
 const display = document.getElementById("display");
 const historyList = document.getElementById("historyList");
 
-// Store calculations
 let storedCalculations = [];
 
-// Append numbers/operators to display
 function appendToDisplay(value) {
   display.value += value;
 }
 
-// Clear display
 function clearDisplay() {
   display.value = "";
 }
 
-// Calculate result
 function calculate() {
   const equation = display.value;
   const result = calculator(equation);
   display.value = result;
 }
 
-// Calculator logic
 function calculator(equation) {
   let operator;
 
@@ -52,7 +47,6 @@ function calculator(equation) {
   return result;
 }
 
-// Update history using innerHTML (no appendChild)
 function addToHistory(entry) {
   storedCalculations.push(entry);
 
@@ -64,7 +58,6 @@ function addToHistory(entry) {
   historyList.innerHTML = html;
 }
 
-// Clear history
 function clearHistory() {
   storedCalculations = [];
   historyList.innerHTML = "";
