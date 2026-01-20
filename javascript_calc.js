@@ -1,45 +1,71 @@
-//implement functions for addition, subtraction, multiplication, divison
-//store each calculations details in an array (.push)
-//display the calculations to the user (console.log(calculation as a variable?))
+// Grab elements
+const display = document.getElementById("display");
+const historyList = document.getElementById("historyList");
 
+// Store calculations
 let storedCalculations = [];
 
-function calculator(equation){
-    let arr = equation.split(" ")
-    let num1 = parseInt(arr[0]);
-    let num2 = parseInt(arr[2]);
-    
-   if(arr[1] == '+'){
-    let result = num1 + num2;
-    storedCalculations.push(equation)
-    return console.log(equation, '=', result)
-   
-   }
-    if(arr[1] == '-'){
-    let result = num1 - num2;
-    storedCalculations.push(equation)
-    return console.log(equation, '=', result)
-   }
-   if(arr[1] == '*'){
-    let result = num1 * num2;
-    storedCalculations.push(equation)
-    return console.log(equation, '=', result)
-   }
-    if(arr[1] == '/'){
-    let result = num1 / num2;
-    storedCalculations.push(equation)
-    return console.log(equation, '=', result)
-   }
+// Append numbers/operators to display
+function appendToDisplay(value) {
+  display.value += value;
 }
 
-function displayHistory() {
-    console.log('stored calculations: ' + storedCalculations)
+// Clear display
+function clearDisplay() {
+  display.value = "";
 }
 
-calculator('3 + 1')
-calculator('41 - 5')
-calculator('73 * 1')
-calculator('73 / 0')
-displayHistory()
-calculator('83 * 1')
-displayHistory()
+// Calculate result
+function calculate() {
+  const equation = display.value;
+  const result = calculator(equation);
+  display.value = result;
+}
+
+// Calculator logic
+function calculator(equation) {
+  let operator;
+
+  if (equation.includes('+')) operator = '+';
+  else if (equation.includes('-')) operator = '-';
+  else if (equation.includes('*')) operator = '*';
+  else if (equation.includes('/')) operator = '/';
+  else return "";
+
+  const parts = equation.split(operator);
+  const num1 = parseFloat(parts[0]);
+  const num2 = parseFloat(parts[1]);
+
+  let result;
+
+  if (operator === '+') result = num1 + num2;
+  if (operator === '-') result = num1 - num2;
+  if (operator === '*') result = num1 * num2;
+  if (operator === '/') {
+    if (num2 === 0) return "Error";
+    result = num1 / num2;
+  }
+
+  const historyEntry = `${equation} = ${result}`;
+  addToHistory(historyEntry);
+
+  return result;
+}
+
+// Update history using innerHTML (no appendChild)
+function addToHistory(entry) {
+  storedCalculations.push(entry);
+
+  let html = "";
+  for (let calc of storedCalculations) {
+    html += `<li>${calc}</li>`;
+  }
+
+  historyList.innerHTML = html;
+}
+
+// Clear history
+function clearHistory() {
+  storedCalculations = [];
+  historyList.innerHTML = "";
+}
