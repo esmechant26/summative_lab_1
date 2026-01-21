@@ -2,48 +2,64 @@
 //store each calculations details in an array (.push)
 //display the calculations to the user
 
+//create empty stored calculations array
 let storedCalculations = [];
 
+
 function calculator(equation){
+    let result;
     let arr = equation.split(" ")
-    let num1 = parseInt(arr[0]);
-    let num2 = parseInt(arr[2]);
-    
+    let num1 = parseFloat(arr[0]);
+    let num2 = parseFloat(arr[2]);
+
+//function that adds calculations to stored calculations array
+function addToHistory(){
+storedCalculations.push(equation + ' = ' + result)
+return
+}
+
+//if statements that perform equations depending on the user's input
    if(arr[1] == '+'){
-    let result = num1 + num2;
-    storedCalculations.push(equation)
+    result = num1 + num2;
+    addToHistory();
     return console.log(equation, '=', result)
    
    }
     if(arr[1] == '-'){
-    let result = num1 - num2;
-    storedCalculations.push(equation)
+    result = num1 - num2;
+    addToHistory();
     return console.log(equation, '=', result)
    }
    if(arr[1] == '*'){
-    let result = num1 * num2;
-    storedCalculations.push(equation)
+    result = num1 * num2;
+    addToHistory();
     return console.log(equation, '=', result)
    }
     if(arr[1] == '/'){
         if (num2 != 0) {
-        let result = num1 / num2;
+       result = num1 / num2;
         }
         else{
-            return result = undefined;
+            console.log(equation, '= undefined');
+            return undefined;
         }
-    
-    storedCalculations.push(equation)
+        addToHistory();
     return console.log(equation, '=', result)
    }
 }
 
+//function that displays the calculation history or returns 'no stored calculations'
 function displayHistory() {
-    console.log('stored calculations: ' + storedCalculations)
+    if (storedCalculations.length == 0){
+        return console.log('No stored calculations');
+    }
+    else{
+        console.log('stored calculations: ' + storedCalculations)
+    }
+    
 }
 
-
-//tests:
+//tests
 calculator('3 + 1')
 calculator('41 - 5')
 calculator('73 * 1')
