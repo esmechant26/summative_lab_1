@@ -26,7 +26,13 @@ function calculator(equation){
     return console.log(equation, '=', result)
    }
     if(arr[1] == '/'){
-    let result = num1 / num2;
+        if (num2 != 0) {
+        let result = num1 / num2;
+        }
+        else{
+            return result = undefined;
+        }
+    
     storedCalculations.push(equation)
     return console.log(equation, '=', result)
    }
@@ -47,4 +53,5 @@ calculator('3 + 1')
 calculator('41 - 5')
 calculator('73 * 1')
 calculator('73 / 0')
+calculator('0 / 32')
 displayHistory()
